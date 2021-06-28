@@ -16,7 +16,7 @@ def get_oadetail(oa_detail):
     app_config = config_dict['Debug']
     engine = create_engine(app_config.SQLALCHEMY_BINDS['oadb'])
     connection = engine.connect()
-    tables = "AdjReqNum,AdjReqDate,ShopName,ShipAdress,ShipConPer,ShipPhone,PartDesc,SellingQuantity"
+    tables = "requestname,AdjReqNum,AdjReqDate,ShipAdress,ShipConPer,ShipPhone,KHMC,CustID,PartNum,PartDesc,SellingQuantity"
     results = connection.execute("Select {} from dbo.vw_WorkflowReport_QZCFH where AdjReqNum='{}';".format(tables, oa_detail)).fetchall()
     results = [dict(zip(result.keys(), result)) for result in results]
     connection.close()

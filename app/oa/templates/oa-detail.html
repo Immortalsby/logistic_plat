@@ -39,6 +39,10 @@
                 <table class="table table-centered table-nowrap mb-0 rounded">
                     <tbody>
                         <tr>
+                            <td class="border-0 w-50"><b>OA Name</b></td>
+                            <td class="border-0"> {{ detail_one.requestname }} </td>
+                        </tr>
+                        <tr>
                             <td class="border-0 w-50"><b>OA Number</b></td>
                             <td class="border-0"> {{ detail_one.AdjReqNum }} </td>
                         </tr>
@@ -47,8 +51,12 @@
                             <td class="border-0"> {{ detail_one.AdjReqDate }} </td>
                         </tr>
                         <tr>
-                            <td class="border-0"><b>Shop Name</b></td>
-                            <td class="border-0"> {{ detail_one.ShopName }} </td>
+                            <td class="border-0"><b>Customer Name</b></td>
+                            <td class="border-0"> {{ detail_one.KHMC }} </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>Customer ID</b></td>
+                            <td class="border-0"> {{ detail_one.CustID }} </td>
                         </tr>
                         <tr>
                             <td class="border-0"><b>Ship Address</b></td>
@@ -69,14 +77,16 @@
                 <table class="table table-centered table-nowrap mb-0 rounded">
                     <thead class="thead-ligh">
                         <tr>
-                            <th class="border-0 w-50">Item Name</th>
+                            <th class="border-0">Item Name</th>
+                            <th class="border-0">Item Code</th>
                             <th class="border-0">Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for detail in details %}
                         <tr>
-                            <td class="border-0 w-50"> {{ detail.PartDesc }} </td>
+                            <td class="border-0"> {{ detail.PartDesc }} </td>
+                            <td class="border-0"> {{ detail.PartNum }} </td>
                             <td class="border-0"> {{ detail.SellingQuantity }} </td>
                         </tr>
                         {% endfor %}
