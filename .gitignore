@@ -1,0 +1,42 @@
+# byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# tests and coverage
+*.pytest_cache
+.coverage
+media
+nginx
+Python*
+
+# database & logs
+*.db
+*.sqlite3
+*.log
+Procfile
+*.md
+*.txt
+
+
+
+# venv
+env
+venv
+
+# other
+.DS_Store
+
+# sphinx docs 
+_build
+_static
+_templates
+
+# javascript
+package-lock.json
+.vscode/symbols.json
+app/base/static/assets/node_modules
+app/base/static/assets/yarn.lock
+app/base/static/assets/.temp
+app/base/static/assets/img
+
+app/base/static/assets/vendor

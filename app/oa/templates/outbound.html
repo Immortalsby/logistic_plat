@@ -1,0 +1,46 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+            <li class="breadcrumb-item"><a href="./dashboard.html"><span class="fas fa-home"></span></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Send OA information to WMS</li>
+        </ol>
+    </nav>
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+        <div class="mb-3 mb-lg-0">
+            <h1 class="h4">OutBound Operations</h1>
+            <p class="mb-0">Send OA information to WMS</p>
+        </div>
+        <!-- <div>
+            <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/components/forms/" class="btn btn-outline-gray"><i class="far fa-question-circle me-1"></i> Forms Docs</a>
+        </div> -->
+    </div> 
+</div>
+
+<form method="post" action="/outbound" class="mt-4" id="outbound">
+
+    {{ oa_number }}
+
+    <!-- Form -->
+    <div class="form-group mb-4">
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1"><span class="fas fa-list-ul"></span></span>
+            <input type="text" placeholder="Enter OA Number" name="oa_number">
+            <button type="submit" name="send" class="btn btn-dark" user_id="{{ oa_number }}" onclick='location.href=("./outbound/{{ oa_number }}")'/>Search OA Number</button>
+        </div>
+    </div>
+        
+</form>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

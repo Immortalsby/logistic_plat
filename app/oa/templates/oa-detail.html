@@ -1,0 +1,128 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+            <li class="breadcrumb-item"><a href="/dashboard.html"><span class="fas fa-home"></span></a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/outbound.html">Send OA information to WMS</a></li>
+            <li class="breadcrumb-item active" aria-current="page">OA Details</li>
+        </ol>
+    </nav>
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+        <div class="mb-3 mb-lg-0">
+            <h1 class="h4">OA Details</h1>
+            <!-- <p class="mb-0">For OA number: {{ oa_number }}</p>
+            <p class="mb-0">Detail: {{ details }}</p>
+            <p class="mb-0">{{ message }}</p> -->
+        </div>
+    </div>
+    {% if error is defined or message is defined %}
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+        <div class="mb-3 mb-lg-0">
+            <p class="mb-0">Information for OA number: {{ oa_number }}</p>
+            <p class="mb-0 text-danger">{{ error }}</p>
+            <p class="mb-0 text-success">Information Send to WMS Successful</p>
+            {{ message }}
+        </div>
+    </div>
+    {% else %}
+    <div class="card border-light shadow-sm my-4 w-75">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-centered table-nowrap mb-0 rounded">
+                    <tbody>
+                        <tr>
+                            <td class="border-0 w-50"><b>OA Number</b></td>
+                            <td class="border-0"> {{ detail_one.AdjReqNum }} </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>OA Date</b></td>
+                            <td class="border-0"> {{ detail_one.AdjReqDate }} </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>Shop Name</b></td>
+                            <td class="border-0"> {{ detail_one.ShopName }} </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>Ship Address</b></td>
+                            <td class="border-0"> {{ detail_one.ShipAdress }} </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>Contact Ppl</b></td>
+                            <td class="border-0"> {{ detail_one.ShipConPer }} </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>Phone</b></td>
+                            <td class="border-0"> {{ detail_one.ShipPhone }} </td>
+                        </tr>
+                        <!-- End of Item -->
+                    </tbody>
+                </table>
+                <hr>
+                <table class="table table-centered table-nowrap mb-0 rounded">
+                    <thead class="thead-ligh">
+                        <tr>
+                            <th class="border-0 w-50">Item Name</th>
+                            <th class="border-0">Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detail in details %}
+                        <tr>
+                            <td class="border-0 w-50"> {{ detail.PartDesc }} </td>
+                            <td class="border-0"> {{ detail.SellingQuantity }} </td>
+                        </tr>
+                        {% endfor %}
+                        <!-- End of Item -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- <div>
+            <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/components/forms/" class="btn btn-outline-gray"><i class="far fa-question-circle me-1"></i> Forms Docs</a>
+        </div> -->
+    {% endif %}
+</div>
+{% if error is defined %}
+<div class="form-group mb-4">
+    <div class="input-group">
+        <span class="input-group-text text-success" id="basic-addon1">&nbsp;&nbsp;&nbsp; Please Check Your OA Number And Try Again.</span>
+        <button type="submit" name="send" class="btn btn-dark"
+            onclick='location.href=("/outbound.html")' />Go Back</button>
+    </div>
+</div>
+{% elif message is defined %}
+<div class="form-group mb-4">
+    <div class="input-group">
+        <span class="input-group-text text-success" id="basic-addon1">&nbsp;&nbsp;&nbsp; Send to WMS successful.</span>
+        <button type="submit" name="send" class="btn btn-dark"
+            onclick='location.href=("/outbound.html")' />Go Back</button>
+    </div>
+</div>
+
+{% else %}
+<form method="post" action="/outbound/{{ oa_number }}/send" class="mt-4 ml-5" id="outbound">
+    <!-- Form -->
+    <div class="form-group mb-4">
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1"><input type="checkbox" name="cb"
+                    id="check_to_send_to_wms">&nbsp;&nbsp;&nbsp; I confirm that all details above are all
+                correct.</span>
+            <button disabled id="send_to_wms" type="submit" name="send" class="btn btn-dark"
+                onclick='location.href=("/outbound/{{ oa_number }}/send")' />Send to WMS</button>
+        </div>
+    </div>
+</form>
+{% endif %}
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
