@@ -26,12 +26,13 @@ class Config(object):
     # params = urllib.parse.quote_plus('DRIVER={SQL Server};SERVER=test;DATABASE=ecology;UID=HS002;PWD=Hs@hanshow#002;Trusted_Connection=yes;') 
     SQLALCHEMY_BINDS = {
         #  'oadb': "mssql+pyodbc:///?odbc_connect=%s" % params 
-        'oadb': '{}://{}:{}@{}/{}?driver=/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.1.so.9.2'.format(
+        'oadb': '{}://{}:{}@{}/{}?driver={}'.format(
             config( 'OADB_ENGINE'   , default='mssql+pyodbc'    ),
             config( 'OADB_USERNAME' , default='HS002'       ),
             config( 'OADB_PASS'     , default='Hs@hanshow#002'          ),
             config( 'OADB_HOST'     , default='172.10.0.132'     ),
-            config( 'OADB_NAME'     , default='ecology' )
+            config( 'OADB_NAME'     , default='ecology' ),
+            config( 'OADB_DRIVER'     , default='SQL+DRIVER' )
     )
     }
     SQLALCHEMY_TRACK_MODIFICATIONS = False

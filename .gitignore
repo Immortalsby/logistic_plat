@@ -21,6 +21,7 @@ Procfile
 
 # venv
 env
+.env
 venv
 
 # other

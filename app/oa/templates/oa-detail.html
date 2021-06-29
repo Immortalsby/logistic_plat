@@ -96,6 +96,33 @@
             </div>
         </div>
     </div>
+    <div class="form-group mb-4">
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1"><span class="fas fa-list-ul"></span></span>
+            <select class="form-select" name="oa_country" aria-label="Default select example">
+                <option selected>Select Destination Country(optional if address contains country)</option>
+                <option value="FR">FR [FRANCE 法国]</option>
+                <option value="DE">DE [GERMANY 德国]</option>
+                <option value="NL">NL [NETHERLANDS 荷兰]</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1"><span class="fas fa-list-ul"></span></span>
+            <select class="form-select" name="oa_shipmethod" aria-label="Default select example">
+                <option selected value="UPS_DELIVERY">Select Destination Country(UPS_DELIVERY by default)</option>
+                <option value="APEXDELIVERY">APEXDELIVERY[自送]</option>
+                <option value="CLIENTPICKUP">CLIENTPICKUP</option>
+                <option value="CTS_GROUP">[CTS 派送]</option>
+                <option value="PGL_DELIVERY">PGL_DELIVERY[香港流浮山仓库配送]</option>
+                <option value="UPS_DELIVERY">UPS STARDARD]</option>
+                <option value="UPS_EXPRESS">UPS EXPRESS]</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1"><span class="fas fa-list-ul"></span></span>
+            <input type="text" placeholder="Order Remarks(optional)" name="oa_remark">
+        </div>
+    </div>
     <!-- <div>
             <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/components/forms/" class="btn btn-outline-gray"><i class="far fa-question-circle me-1"></i> Forms Docs</a>
         </div> -->
@@ -104,17 +131,18 @@
 {% if error is defined %}
 <div class="form-group mb-4">
     <div class="input-group">
-        <span class="input-group-text text-success" id="basic-addon1">&nbsp;&nbsp;&nbsp; Please Check Your OA Number And Try Again.</span>
-        <button type="submit" name="send" class="btn btn-dark"
-            onclick='location.href=("/outbound.html")' />Go Back</button>
+        <span class="input-group-text text-success" id="basic-addon1">&nbsp;&nbsp;&nbsp; Please Check Your OA Number And
+            Try Again.</span>
+        <button type="submit" name="send" class="btn btn-dark" onclick='location.href=("/outbound.html")' />Go
+        Back</button>
     </div>
 </div>
 {% elif message is defined %}
 <div class="form-group mb-4">
     <div class="input-group">
         <span class="input-group-text text-success" id="basic-addon1">&nbsp;&nbsp;&nbsp; Send to WMS successful.</span>
-        <button type="submit" name="send" class="btn btn-dark"
-            onclick='location.href=("/outbound.html")' />Go Back</button>
+        <button type="submit" name="send" class="btn btn-dark" onclick='location.href=("/outbound.html")' />Go
+        Back</button>
     </div>
 </div>
 
