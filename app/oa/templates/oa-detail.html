@@ -27,8 +27,11 @@
     <div class="d-flex justify-content-between w-100 flex-wrap">
         <div class="mb-3 mb-lg-0">
             <p class="mb-0">Information for OA number: {{ oa_number }}</p>
+            {% if error is defined %}
             <p class="mb-0 text-danger">{{ error }}</p>
+            {% else %}
             <p class="mb-0 text-success">Information Send to WMS Successful</p>
+            {% endif %}
             {{ message }}
         </div>
     </div>
