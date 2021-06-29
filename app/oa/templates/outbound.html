@@ -22,7 +22,7 @@
         <!-- <div>
             <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/components/forms/" class="btn btn-outline-gray"><i class="far fa-question-circle me-1"></i> Forms Docs</a>
         </div> -->
-    </div> 
+    </div>
 </div>
 
 <form method="post" action="/outbound" class="mt-4" id="outbound">
@@ -30,11 +30,12 @@
     {{ oa_number }}
 
     <!-- Form -->
+    <p class="text-danger">{{ message }}</p>
     <div class="form-group mb-4">
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><span class="fas fa-clipboard-list"></span></span>
-            <input type="text" placeholder="Enter OA Number" name="oa_number">
-            <button type="submit" name="send" class="btn btn-dark" user_id="{{ oa_number }}" onclick='location.href=("./outbound/{{ oa_number }}")'/>Search OA Number</button>
+            <input type="text" placeholder="Enter OA Number" name="oa_number" class="w-25">
+            <button type="submit" name="send" class="btn btn-dark"/>Search OA Number</button>
         </div>
     </div>
         

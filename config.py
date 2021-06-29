@@ -23,7 +23,7 @@ class Config(object):
     config( 'DB_PORT'     , default=3306           ),
     config( 'DB_NAME'     , default='logis_db' )
     )
-    # params = urllib.parse.quote_plus('DRIVER={SQL Server};SERVER=test;DATABASE=ecology;UID=HS002;PWD=Hs@hanshow#002;Trusted_Connection=yes;') 
+ 
     SQLALCHEMY_BINDS = {
         #  'oadb': "mssql+pyodbc:///?odbc_connect=%s" % params 
         'oadb': '{}://{}:{}@{}/{}?driver={}'.format(
@@ -45,45 +45,36 @@ class ProductionConfig(Config):
     REMEMBER_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_DURATION = 3600
 
-    # MySQL database
-    # SQLALCHEMY_DATABASE_URI = '{}://{}:{}@{}:{}/{}'.format(
-    #     config( 'DB_ENGINE'   , default='mysql+pymysql'    ),
-    #     config( 'DB_USERNAME' , default='logis_user'       ),
-    #     config( 'DB_PASS'     , default='H@nshow123'          ),
-    #     config( 'DB_HOST'     , default='localhost'     ),
-    #     config( 'DB_PORT'     , default=3306           ),
-    #     config( 'DB_NAME'     , default='logis_db' )
-    # )
 
 class DebugConfig(Config):
     DEBUG = True
 
 # Load all possible configurations
+oadb_dict = {
+    'tables': 'requestname,AdjReqNum,AdjReqDate,ShipAdress,ShipConPer,ShipPhone,KHMC,CustID,PartNum,PartDesc,SellingQuantity',
+    'db_name': 'dbo.vw_WorkflowReport_QZCFH'
+}
+
 config_dict = {
     'Production': ProductionConfig,
     'Debug'     : DebugConfig
 }
 
-xml_url = "https://wms.apex-oms.com/default/svc/web-service"
+xml_url = "https://wms.apex-oms.com/default/svc/web-service/"
 
-app_token = '''
-			</paramsJson>
-			<appToken>7f27b5da0ed81105b98c35151b54637f</appToken>
-'''
-app_key = '''
-			<appKey>05b92060f873c3c7649339c052a637f5</appKey>
-'''
-body_start = '''
-<?xml version="1.0" encoding="UTF-8"?>
+app_token = '''</paramsJson>
+<appToken>7f27b5da0ed81105b98c35151b54637f</appToken>'''
+app_key = '''<appKey>05b92060f873c3c7649339c052a637f5</appKey>'''
+body_start = '''<?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.example.org/Ec/">
 	<SOAP-ENV:Body>
 		<ns1:callService>
-			<paramsJson>
-'''
+			<paramsJson>'''
+
 body_end = '''</ns1:callService>
 	</SOAP-ENV:Body>
-</SOAP-ENV:Envelope>
-'''
+</SOAP-ENV:Envelope>'''
+
 xml_dict = {
     'body_start': body_start,
     'data': None,
@@ -93,3 +84,15 @@ xml_dict = {
     'body_end': body_end
 }
 
+xml_data = {
+            "platform":"B2B",
+            "warehouse_code":"TESTHANSHOW",
+            "shipping_method": "",
+            "reference_no": "",
+            "country_code": "",
+            "name": "",
+            "address1": "",
+            "company": "",
+            "order_desc": "",
+            "items": ""
+            }
