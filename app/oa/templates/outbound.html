@@ -30,7 +30,7 @@
     {{ oa_number }}
 
     <!-- Form -->
-    <p class="text-danger">{{ message }}</p>
+    <p class="text-danger">{% for message in get_flashed_messages() %}{{ message }}{% endfor %}</p>
     <div class="form-group mb-4">
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><span class="fas fa-clipboard-list"></span></span>

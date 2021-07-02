@@ -23,19 +23,22 @@
             <p class="mb-0">{{ message }}</p> -->
         </div>
     </div>
-    {% if error is defined or message is defined %}
+
     <div class="d-flex justify-content-between w-100 flex-wrap">
         <div class="mb-3 mb-lg-0">
             <p class="mb-0">Information for OA number: {{ oa_number }}</p>
-            {% if error is defined %}
+            {% if error is not none and message is none %}
             <p class="mb-0 text-danger">{{ error }}</p>
-            {% else %}
+            {% elif error is none and message is not none and message is defined %}
             <p class="mb-0 text-success">Information Send to WMS Successful</p>
-            {% endif %}
             {{ message }}
+            {% if order_code is not none and order_code is defined %}
+            {{ order_code }}
+            {% endif %}
+            {% endif %}
         </div>
     </div>
-    {% else %}
+    {% if detail_one is defined and detail_one is not none%}
     <div class="card border-light shadow-sm my-4 w-75">
         <div class="card-body">
             <div class="table-responsive">
@@ -99,10 +102,39 @@
             </div>
         </div>
     </div>
+
+    <!-- <div>
+            <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/components/forms/" class="btn btn-outline-gray"><i class="far fa-question-circle me-1"></i> Forms Docs</a>
+        </div> -->
+    {% endif %}
+</div>
+{% if error is not none %}
+<div class="form-group mb-4">
+    <div class="input-group">
+        <span class="input-group-text text-danger" id="basic-addon1">&nbsp;&nbsp;&nbsp; Please Check Your Information
+            And
+            Try Again.</span>
+        <button type="submit" name="send" class="btn btn-dark" onclick='location.href=("/outbound.html")' />Go
+        Back</button>
+    </div>
+</div>
+{% elif message is defined and message is not none %}
+<div class="form-group mb-4">
+    <div class="input-group">
+        <span class="input-group-text text-success" id="basic-addon1">&nbsp;&nbsp;&nbsp; Send to WMS successful.</span>
+        <button type="submit" name="send" class="btn btn-dark" onclick='location.href=("/outbound.html")' />Go
+        Back</button>
+    </div>
+</div>
+
+{% else %}
+<form method="post" action="/outbound/{{ oa_number }}/send" class="mt-4 ml-5" id="outbound">
+    <!-- Form -->
     <div class="form-group my-4">
         <h1 class="h4">Additional Information</h1>
         <div class="mb-3">
-            <span class="input-group-text" id="basic-addon1" style="display: inline!important;"><span class="fas fa-globe-europe"></span></span>
+            <span class="input-group-text" id="basic-addon1" style="display: inline!important;"><span
+                    class="fas fa-globe-europe"></span></span>
             <select class="form-select w-auto" name="oa_country" style="display: inline!important;margin-left:-5px">
                 <option selected>Select Destination Country(optional if address contains country)</option>
                 <option value="FR">FR [FRANCE 法国]</option>
@@ -113,7 +145,8 @@
     </div>
     <div class="form-group my-4">
         <div class="mb-3">
-            <span class="input-group-text" id="basic-addon1" style="display: inline!important;"><span class="fas fa-truck"></span></span>
+            <span class="input-group-text" id="basic-addon1" style="display: inline!important;"><span
+                    class="fas fa-truck"></span></span>
             <select class="form-select w-auto" name="oa_shipmethod" style="display: inline !important;margin-left:-5px">
                 <option selected value="UPS_DELIVERY">Select Shipping Method(UPS STARDARD by default)</option>
                 <option value="APEXDELIVERY">APEXDELIVERY[自送]</option>
@@ -128,42 +161,16 @@
     <div class="form-group my-4 w-50">
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><span class="fas fa-comment-dots"></span></span>
-            <input type="text" class="me-sm-1 mb-sm-0 form-control"  placeholder="Order Remarks(optional)" name="oa_remark">
+            <input type="text" class="me-sm-1 mb-sm-0 form-control" placeholder="Order Remarks(optional)"
+                name="oa_remark">
         </div>
     </div>
-    <!-- <div>
-            <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/components/forms/" class="btn btn-outline-gray"><i class="far fa-question-circle me-1"></i> Forms Docs</a>
-        </div> -->
-    {% endif %}
-</div>
-{% if error is defined %}
-<div class="form-group mb-4">
-    <div class="input-group">
-        <span class="input-group-text text-success" id="basic-addon1">&nbsp;&nbsp;&nbsp; Please Check Your OA Number And
-            Try Again.</span>
-        <button type="submit" name="send" class="btn btn-dark" onclick='location.href=("/outbound.html")' />Go
-        Back</button>
-    </div>
-</div>
-{% elif message is defined %}
-<div class="form-group mb-4">
-    <div class="input-group">
-        <span class="input-group-text text-success" id="basic-addon1">&nbsp;&nbsp;&nbsp; Send to WMS successful.</span>
-        <button type="submit" name="send" class="btn btn-dark" onclick='location.href=("/outbound.html")' />Go
-        Back</button>
-    </div>
-</div>
-
-{% else %}
-<form method="post" action="/outbound/{{ oa_number }}/send" class="mt-4 ml-5" id="outbound">
-    <!-- Form -->
     <div class="form-group mb-4">
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><input type="checkbox" name="cb"
                     id="check_to_send_to_wms">&nbsp;&nbsp;&nbsp; I confirm that all details above are all
                 correct.</span>
-            <button disabled id="send_to_wms" type="submit" name="send" class="btn btn-dark"
-                onclick='location.href=("/outbound/{{ oa_number }}/send")' />Send to WMS</button>
+            <button disabled id="send_to_wms" type="submit" name="send" class="btn btn-dark"/>Send to WMS</button>
         </div>
     </div>
 </form>

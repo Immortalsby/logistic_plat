@@ -11,7 +11,7 @@ from sqlalchemy.sql.expression import table
 from config import config_dict, xml_dict, xml_url, oadb_dict,xml_data
 import requests
 import json
-from lxml import html
+from lxml import etree,html
 
 
 
@@ -26,7 +26,7 @@ def get_oadetail(oa_detail):
     connection.close()
     return results
 
-def prepare_data(results, send_form):
+def prepare_data(results, g_send_form):
     skus, quantitys = [], []
     for product in results:
         skus.append(product['PartDesc'].replace(' ', '').split("；")[0])
@@ -35,13 +35,13 @@ def prepare_data(results, send_form):
               "product_name_en": "Electronic shelf Label",
               "quantity": quantity} for sku, quantity in zip(skus, quantitys)]
     xml_data['reference_no'] = results[0]['AdjReqNum']+'_'+results[0]['CustID']
-    xml_data['country_code'] = send_form['country_code']
+    xml_data['country_code'] = g_send_form['country_code']
     xml_data['name'] = results[0]['ShipConPer']
     xml_data['address1'] = results[0]['ShipAdress']
     xml_data['items'] = items
-    xml_data['shipping_method'] = send_form['ship_method']
+    xml_data['shipping_method'] = g_send_form['ship_method']
     xml_data['company'] = results[0]['KHMC']
-    xml_data['order_desc'] = send_form['remarks']
+    xml_data['order_desc'] = g_send_form['remarks']
 
     return json.dumps(xml_data,ensure_ascii=False)
 
@@ -49,17 +49,20 @@ def prepare_request(req_dict):
     str = ''.join(req_dict.values())
     return str
 
-def prepare_oadetail(oa_number, send_form):
+def prepare_oadetail(oa_number, g_send_form):
     results = get_oadetail(oa_number)
     request_dict = xml_dict
-    data = prepare_data(results, send_form)
+    data = prepare_data(results, g_send_form)
     request_dict['service'] = '<service>createOrder</service>'
     request_dict['data'] = data
     return prepare_request(request_dict)
     
 def send_oadetail(request):
     r = requests.post(xml_url, data=request.encode("utf-8"))
-    tree = html.fromstring(r.content)
-    navareas = tree.getroot()
-    # navareas = tree.xpath('//SOAP-ENV:Envelope/SOAP-ENV:Body/ns1:callServiceResponse/response')
-    return navareas
+    tree = etree.XML(r.content)
+    navareas = tree.xpath('//SOAP-ENV:Envelope/SOAP-ENV:Body/ns1:callServiceResponse/response/text()',namespaces={'SOAP-ENV': 'http://schemas.xmlsoap.org/soap/envelope/','ns1': 'http://www.example.org/Ec/'})
+    output = ''
+    for i in navareas[0]:
+	    output += str(i)
+    res_list = json.loads(output)
+    return res_list

@@ -90,6 +90,8 @@ xml_data = {
             "shipping_method": "",
             "reference_no": "",
             "country_code": "",
+            "province": "province",
+            "zipcode":"142970",
             "name": "",
             "address1": "",
             "company": "",
