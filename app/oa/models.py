@@ -39,7 +39,8 @@ def prepare_data(results, g_send_form):
     xml_data['name'] = results[0]['ShipConPer']
     xml_data['address1'] = results[0]['ShipAdress']
     xml_data['items'] = items
-    xml_data['shipping_method'] = g_send_form['ship_method']
+    xml_data['province'] = g_send_form['province']
+    xml_data['zipcode'] = g_send_form['zipcode']
     xml_data['company'] = results[0]['KHMC']
     xml_data['order_desc'] = g_send_form['remarks']
 

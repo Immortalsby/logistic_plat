@@ -43,18 +43,18 @@ def get_detail(oa_number):
 @blueprint.route('/outbound/<oa_number>/send', methods=['GET', 'POST'])
 @login_required
 def send(oa_number):
+    message = None
+    error = None
     order_code = None
+    g_send_form = dict()
     if request.method == "POST":
-        g_send_form=dict()
+        g_send_form = dict()
         g_send_form['country_code'] = request.form.get('oa_country')
         g_send_form['ship_method'] = request.form.get('oa_shipmethod')
         g_send_form['remarks'] = request.form.get('oa_remark')
-        print("from is : " + str(g_send_form))
+        g_send_form['province'] = request.form.get('oa_province')
+        g_send_form['zipcode'] = request.form.get('oa_zipcode')
     requests = prepare_oadetail(oa_number, g_send_form)
-    message = None
-    error = None
-    print(requests)
-    # print(g_send_form)
     result = send_oadetail(requests)
     if result['ask']=="Failure":
         error = result['message']
