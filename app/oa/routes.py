@@ -55,7 +55,8 @@ def send(oa_number):
     requests = prepare_oadetail(oa_number, g_send_form)
     result = send_oadetail(requests)
     if result['ask']=="Failure":
-        error = result['message']
+        # error = result['message']
+        error = str(result)
     else:
         message = result['message']
         order_code = 'Order Code: '+ result['order_code']
