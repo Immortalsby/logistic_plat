@@ -40,7 +40,7 @@ def prepare_data(results, g_send_form):
     xml_data['address1'] = results[0]['ShipAdress']
     xml_data['items'] = items
     xml_data['company'] = results[0]['KHMC']
-    xml_data['order_desc'] = "PO Number: " + results[0]['KHPOH'] + '\n' + g_send_form['remarks']
+    xml_data['order_desc'] = "PO Number: " + po_number = 'Not recorded' if results[0]['KHPOH'] == None else results[0]['KHPOH'] + '\n' + g_send_form['remarks']
 
     return json.dumps(xml_data,ensure_ascii=False)
 
