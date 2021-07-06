@@ -56,7 +56,7 @@ def send(oa_number):
     result = send_oadetail(requests)
     if result['ask']=="Failure":
         # error = result['message']
-        error = str(result)
+        error = str(result) + str(requests)
     else:
         message = result['message']
         order_code = 'Order Code: '+ result['order_code']
