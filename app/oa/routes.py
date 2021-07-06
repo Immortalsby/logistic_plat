@@ -52,8 +52,6 @@ def send(oa_number):
         g_send_form['country_code'] = request.form.get('oa_country')
         g_send_form['ship_method'] = request.form.get('oa_shipmethod')
         g_send_form['remarks'] = request.form.get('oa_remark')
-        g_send_form['province'] = request.form.get('oa_province')
-        g_send_form['zipcode'] = request.form.get('oa_zipcode')
     requests = prepare_oadetail(oa_number, g_send_form)
     result = send_oadetail(requests)
     if result['ask']=="Failure":

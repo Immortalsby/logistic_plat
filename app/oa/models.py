@@ -34,15 +34,13 @@ def prepare_data(results, g_send_form):
     items = [{"product_sku": sku,
               "product_name_en": "Electronic shelf Label",
               "quantity": quantity} for sku, quantity in zip(skus, quantitys)]
-    xml_data['reference_no'] = results[0]['AdjReqNum']+'_'+results[0]['CustID']
+    xml_data['reference_no'] = results[0]['AdjReqNum'] + '_' + results[0]['CustID']
     xml_data['country_code'] = g_send_form['country_code']
     xml_data['name'] = results[0]['ShipConPer']
     xml_data['address1'] = results[0]['ShipAdress']
     xml_data['items'] = items
-    xml_data['province'] = g_send_form['province']
-    xml_data['zipcode'] = g_send_form['zipcode']
     xml_data['company'] = results[0]['KHMC']
-    xml_data['order_desc'] = g_send_form['remarks']
+    xml_data['order_desc'] = "PO Number: " + results[0]['KHPOH'] + '\n' + g_send_form['remarks']
 
     return json.dumps(xml_data,ensure_ascii=False)
 

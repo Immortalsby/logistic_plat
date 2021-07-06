@@ -51,7 +51,7 @@ class DebugConfig(Config):
 
 # Load all possible configurations
 oadb_dict = {
-    'tables': 'requestname,AdjReqNum,AdjReqDate,ShipAdress,ShipConPer,ShipPhone,KHMC,CustID,PartNum,PartDesc,SellingQuantity',
+    'tables': 'requestname,AdjReqNum,AdjReqDate,ShipAdress,ShipConPer,ShipPhone,KHMC,CustID,PartNum,PartDesc,SellingQuantity,KHPOH',
     'db_name': 'dbo.vw_WorkflowReport_QZCFH'
 }
 
