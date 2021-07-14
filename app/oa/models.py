@@ -15,31 +15,43 @@ from lxml import etree,html
 
 
 
-
 def get_oadetail(oa_detail):
     app_config = config_dict['Debug']
     engine = create_engine(app_config.SQLALCHEMY_BINDS['oadb'])
     connection = engine.connect()
-    tables = oadb_dict['tables']
-    results = connection.execute("Select {} from {} where AdjReqNum='{}';".format(tables, oadb_dict['db_name'], oa_detail)).fetchall()
+    tables = oadb_dict['tables_main']
+    results = connection.execute("Select {} from {} where AdjReqNum='{}';".format(tables, oadb_dict['db_main'], oa_detail)).fetchall()
     results = [dict(zip(result.keys(), result)) for result in results]
     connection.close()
     return results
 
-def prepare_data(results, g_send_form):
+def get_part(id):
+    app_config = config_dict['Debug']
+    engine = create_engine(app_config.SQLALCHEMY_BINDS['oadb'])
+    connection = engine.connect()
+    tables = oadb_dict['tables_part']
+    results = connection.execute("Select {} from {} where mainid={} and PartNum NOT IN ({});".format(tables, oadb_dict['db_part'], id, oadb_dict['except_part'])).fetchall()
+    results = [dict(zip(result.keys(), result)) for result in results]
+    connection.close()
+    return results
+
+def prepare_data(main, g_send_form):
+    print("id",main[0]['id'])
+    results = get_part(main[0]['id'])
     skus, quantitys = [], []
     for product in results:
-        skus.append(product['PartDesc'].replace(' ', '').split("；")[0])
+        # skus.append(product['PartDesc'].replace(' ', '').split("；")[0])
+        skus.append(product['PartDesc'])
         quantitys.append(product['SellingQuantity'])
     items = [{"product_sku": sku,
               "product_name_en": "Electronic shelf Label",
               "quantity": quantity} for sku, quantity in zip(skus, quantitys)]
-    xml_data['reference_no'] = results[0]['AdjReqNum'] + '_' + results[0]['CustID']
+    xml_data['reference_no'] = main[0]['AdjReqNum'] + '_' + main[0]['CustID']
     xml_data['country_code'] = g_send_form['country_code']
-    xml_data['name'] = results[0]['ShipConPer']
-    xml_data['address1'] = results[0]['ShipAdress']
+    xml_data['name'] = main[0]['ShipConPer']
+    xml_data['address1'] = main[0]['ShipAdress']
     xml_data['items'] = items
-    xml_data['company'] = results[0]['KHMC']
+    xml_data['company'] = main[0]['KHMC']
     xml_data['shipping_method'] = g_send_form['ship_method']
     po_number = 'Not recorded' if results[0]['KHPOH'] == None else results[0]['KHPOH']
     xml_data['order_desc'] = "----------PO Number: " + po_number + '----------\n' + g_send_form['remarks']

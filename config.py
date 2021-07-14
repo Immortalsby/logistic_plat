@@ -51,8 +51,13 @@ class DebugConfig(Config):
 
 # Load all possible configurations
 oadb_dict = {
-    'tables': 'requestname,AdjReqNum,AdjReqDate,ShipAdress,ShipConPer,ShipPhone,KHMC,CustID,PartNum,PartDesc,SellingQuantity,KHPOH',
-    'db_name': 'dbo.vw_WorkflowReport_QZCFH'
+    'tables_main': 'id, requestname, AdjReqNum, AdjReqDate, ShipAdress, ShipConPer, ShipPhone, KHMC, CustID',
+    'except_part': '400000000001,508100000008,401000100002,401000100001,402000100027',
+    'tables_part': 'PartNum, PartDesc, SellingQuantity, KHPOH',
+    'tables_ware': 'WLMS, CKLS, WLID',
+    'db_main': 'dbo.vw_WorkflowReport_Qzcfh_main',
+    'db_part': 'dbo.vw_WorkflowReport_Qzcfh_Dt1',
+    'db_ware': 'dbo.vw_WorkflowReport_Qzcfh_Dt2'
 }
 
 config_dict = {

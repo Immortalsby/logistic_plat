@@ -8,7 +8,7 @@ from flask import render_template, redirect, url_for, request,flash
 from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
-from app.oa.models import get_oadetail, prepare_oadetail, send_oadetail
+from app.oa.models import get_oadetail, prepare_oadetail, send_oadetail, get_part
 
 @blueprint.route('/outbound', methods=['GET', 'POST'])
 @login_required
@@ -25,17 +25,19 @@ def outbound():
 @blueprint.route('/outbound/<oa_number>', methods=['GET', 'POST'])
 @login_required
 def get_detail(oa_number):
-    details = get_oadetail(oa_number)
-    detail_one = None
+    detail_one = get_oadetail(oa_number)[0]
+    details = get_part(detail_one['id'])
+    po_number = details[0]['KHPOH']
     error = None
-    if len(details):
-        detail_one = details[0]
-    else:
+    if len(details) == 0:
+    #     detail_one = get_oadetail(oa_number)[0]
+    # else:
         error = "Not a valid OA Number"
+        po_number = None
     print(request.method)
     print(request.form.get('oa_country'))
 
-    return render_template('oa-detail.html', oa_number=oa_number, details=details, error=error, detail_one=detail_one)
+    return render_template('oa-detail.html', oa_number=oa_number, details=details, error=error, detail_one=detail_one, po_number=po_number)
 
     
 
