@@ -51,7 +51,7 @@ class DebugConfig(Config):
 
 # Load all possible configurations
 oadb_dict = {
-    'tables_main': 'id, requestname, AdjReqNum, AdjReqDate, ShipAdress, ShipConPer, ShipPhone, KHMC, CustID',
+    'tables_main': 'id, requestname, AdjReqNum, AdjReqDate, ShipAdress, ShipConPer, ShipPhone, KHMC, CustID,FHGJ,FHCity,FHYB,XXDZ',
     'except_part': '400000000001,508100000008,401000100002,401000100001,402000100027',
     'tables_part': 'PartNum, PartDesc, SellingQuantity, KHPOH',
     'tables_ware': 'WLMS, CKLS, WLID',
@@ -95,8 +95,8 @@ xml_data = {
             "shipping_method": "",
             "reference_no": "",
             "country_code": "",
-            "province": "province",
-            "zipcode":"142970",
+            "province": "",
+            "zipcode":"",
             "name": "",
             "address1": "",
             "company": "",

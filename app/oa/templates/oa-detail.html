@@ -69,8 +69,20 @@
                             <td class="border-0"> {{ po_number }} </td>
                         </tr>
                         <tr>
+                            <td class="border-0"><b>Ship Country</b></td>
+                            <td class="border-0"> {{ detail_one.FHGJ }} [{{ c_code }}] </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>Ship City</b></td>
+                            <td class="border-0"> {{ detail_one.FHCity }} </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>Ship ZipCode</b></td>
+                            <td class="border-0"> {{ detail_one.FHYB }} </td>
+                        </tr>
+                        <tr>
                             <td class="border-0"><b>Ship Address</b></td>
-                            <td class="border-0"> {{ detail_one.ShipAdress }} </td>
+                            <td class="border-0"> {{ detail_one.XXDZ }} </td>
                         </tr>
                         <tr>
                             <td class="border-0"><b>Contact Ppl</b></td>
@@ -139,12 +151,15 @@
         <div class="mb-3">
             <span class="input-group-text" id="basic-addon1" style="display: inline!important;"><span
                     class="fas fa-globe-europe"></span></span>
+                    
             <select class="form-select w-auto" name="oa_country" style="display: inline!important;margin-left:-5px">
-                <option selected>Select Destination Country</option>
+                <!-- <option selected>Select Destination Country</option>
                 <option value="FR">FR [FRANCE 法国]</option>
                 <option value="DE">DE [GERMANY 德国]</option>
-                <option value="NL">NL [NETHERLANDS 荷兰]</option>
+                <option value="NL">NL [NETHERLANDS 荷兰]</option> -->
+                <option value="{{ c_code }}">[{{ c_code }}] {{ detail_one.FHGJ }}</option>
             </select>
+            <span class="ml-3 text-danger">This is your <strong>Destination Country</strong></span>
         </div>
     </div>
     <div class="form-group my-4">
@@ -152,7 +167,7 @@
             <span class="input-group-text" id="basic-addon1" style="display: inline!important;"><span
                     class="fas fa-truck"></span></span>
             <select class="form-select w-auto" name="oa_shipmethod" style="display: inline !important;margin-left:-5px">
-                <option selected value="UPS_DELIVERY">Select Shipping Method(UPS STARDARD by default)</option>
+                <option selected value="UPS_DELIVERY">Select Shipping Method</option>
                 <option value="APEXDELIVERY">APEXDELIVERY[自送]</option>
                 <option value="CLIENTPICKUP">CLIENTPICKUP</option>
                 <option value="CTS_GROUP">CTS 派送</option>
@@ -160,6 +175,7 @@
                 <option value="UPS_DELIVERY">UPS STARDARD</option>
                 <option value="UPS_EXPRESS">UPS EXPRESS</option>
             </select>
+            <span class="ml-3 text-danger">Choose your Shipping Method Otherwise we will use <strong>UPS STARDARD</strong> by default</span>
         </div>
     </div>
     <div class="form-group my-4 w-50">

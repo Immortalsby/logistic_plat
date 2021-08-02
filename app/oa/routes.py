@@ -9,6 +9,8 @@ from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
 from app.oa.models import get_oadetail, prepare_oadetail, send_oadetail, get_part
+from app.oa.utils import get_country
+
 
 @blueprint.route('/outbound', methods=['GET', 'POST'])
 @login_required
@@ -29,6 +31,7 @@ def get_detail(oa_number):
     details = get_part(detail_one['id'])
     po_number = details[0]['KHPOH']
     error = None
+    c_code = get_country(detail_one['FHGJ'])
     if len(details) == 0:
     #     detail_one = get_oadetail(oa_number)[0]
     # else:
@@ -37,7 +40,7 @@ def get_detail(oa_number):
     print(request.method)
     print(request.form.get('oa_country'))
 
-    return render_template('oa-detail.html', oa_number=oa_number, details=details, error=error, detail_one=detail_one, po_number=po_number)
+    return render_template('oa-detail.html', oa_number=oa_number, details=details, error=error, detail_one=detail_one, po_number=po_number, c_code=c_code)
 
     
 

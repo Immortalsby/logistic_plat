@@ -12,6 +12,7 @@ from config import config_dict, xml_dict, xml_url, oadb_dict,xml_data
 import requests
 import json
 from lxml import etree,html
+from app.oa.utils import get_country
 
 
 
@@ -41,15 +42,17 @@ def prepare_data(main, g_send_form):
     skus, quantitys = [], []
     for product in results:
         # skus.append(product['PartDesc'].replace(' ', '').split("；")[0])
-        skus.append(product['PartDesc'])
+        skus.append(product['PartNum'])
         quantitys.append(product['SellingQuantity'])
     items = [{"product_sku": sku,
               "product_name_en": "Electronic shelf Label",
               "quantity": quantity} for sku, quantity in zip(skus, quantitys)]
     xml_data['reference_no'] = main[0]['AdjReqNum'] + '_' + main[0]['CustID']
-    xml_data['country_code'] = g_send_form['country_code']
+    xml_data['country_code'] = get_country(main[0]['FHGJ'])
     xml_data['name'] = main[0]['ShipConPer']
-    xml_data['address1'] = main[0]['ShipAdress']
+    xml_data['address1'] = main[0]['XXDZ']
+    xml_data['province'] = main[0]['FHCity']
+    xml_data['zipcode'] = main[0]['FHYB']
     xml_data['items'] = items
     xml_data['company'] = main[0]['KHMC']
     xml_data['shipping_method'] = g_send_form['ship_method']
