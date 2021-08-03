@@ -30,7 +30,8 @@ def get_detail(oa_number):
     detail_one = get_oadetail(oa_number)[0]
     details = get_oadbinfo(detail_one['id'],'tables_part','db_part')
     parts = get_oadbinfo(detail_one['id'],'tables_ware','db_ware')
-    if parts != None:
+    print(parts)
+    if parts != []:
         for detail in details:
             rest = detail['SellingQuantity']
             for part in parts:
