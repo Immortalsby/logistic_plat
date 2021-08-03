@@ -42,6 +42,8 @@ def get_detail(oa_number):
                     rest = part['rest_part']
             parts[-1]['shipped'] = None
         print(parts)
+    else:
+        parts = None
     po_number = details[0]['KHPOH']
     error = None
     c_code = get_country(detail_one['FHGJ'])
