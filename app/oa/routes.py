@@ -30,16 +30,17 @@ def get_detail(oa_number):
     detail_one = get_oadetail(oa_number)[0]
     details = get_oadbinfo(detail_one['id'],'tables_part','db_part')
     parts = get_oadbinfo(detail_one['id'],'tables_ware','db_ware')
-    for detail in details:
-        rest = detail['SellingQuantity']
-        for part in parts:
-            if detail['PartNum'] == part['WLID']:
-                part['shipped'] = 'shipped'
-                part['rest_part'] = rest - int(part['CKSL'])
-                part['total_part'] = detail['SellingQuantity']
-                rest = part['rest_part']
-        parts[-1]['shipped'] = None
-    print(parts)
+    if parts != None:
+        for detail in details:
+            rest = detail['SellingQuantity']
+            for part in parts:
+                if detail['PartNum'] == part['WLID']:
+                    part['shipped'] = 'shipped'
+                    part['rest_part'] = rest - int(part['CKSL'])
+                    part['total_part'] = detail['SellingQuantity']
+                    rest = part['rest_part']
+            parts[-1]['shipped'] = None
+        print(parts)
     po_number = details[0]['KHPOH']
     error = None
     c_code = get_country(detail_one['FHGJ'])

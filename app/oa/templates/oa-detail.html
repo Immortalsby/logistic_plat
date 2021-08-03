@@ -96,6 +96,7 @@
                     </tbody>
                 </table>
                 <hr>
+                {% if details is not none %}
                 <table class="table table-centered table-nowrap mb-0 rounded">
                     <thead class="thead-ligh">
                         <tr>
@@ -123,6 +124,9 @@
                         <!-- End of Item -->
                     </tbody>
                 </table>
+                {% else %}
+                <h1 class="text-danger">No outbound OA order is created. Please <a href="https://oa.hanshow.com" target="_blanc">create an OA order</a> first. </h1>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -194,10 +198,12 @@
     </div>
     <div class="form-group mb-4">
         <div class="input-group">
+            {% if details is not none %}
             <span class="input-group-text" id="basic-addon1"><input type="checkbox" name="cb"
                     id="check_to_send_to_wms">&nbsp;&nbsp;&nbsp; I confirm that all details above are all
                 correct.</span>
             <button disabled id="send_to_wms" type="submit" name="send" class="btn btn-dark"/>Send to WMS</button>
+            {% endif %}
         </div>
     </div>
 </form>
