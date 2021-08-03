@@ -8,7 +8,7 @@ from flask import render_template, redirect, url_for, request,flash
 from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
-from app.oa.models import get_oadetail, prepare_oadetail, send_oadetail, get_part
+from app.oa.models import get_oadetail, prepare_oadetail, send_log, send_oadetail, get_oadbinfo, Log
 from app.oa.utils import get_country
 
 
@@ -28,7 +28,18 @@ def outbound():
 @login_required
 def get_detail(oa_number):
     detail_one = get_oadetail(oa_number)[0]
-    details = get_part(detail_one['id'])
+    details = get_oadbinfo(detail_one['id'],'tables_part','db_part')
+    parts = get_oadbinfo(detail_one['id'],'tables_ware','db_ware')
+    for detail in details:
+        rest = detail['SellingQuantity']
+        for part in parts:
+            if detail['PartNum'] == part['WLID']:
+                part['shipped'] = 'shipped'
+                part['rest_part'] = rest - int(part['CKSL'])
+                part['total_part'] = detail['SellingQuantity']
+                rest = part['rest_part']
+        parts[-1]['shipped'] = None
+    print(parts)
     po_number = details[0]['KHPOH']
     error = None
     c_code = get_country(detail_one['FHGJ'])
@@ -40,7 +51,7 @@ def get_detail(oa_number):
     print(request.method)
     print(request.form.get('oa_country'))
 
-    return render_template('oa-detail.html', oa_number=oa_number, details=details, error=error, detail_one=detail_one, po_number=po_number, c_code=c_code)
+    return render_template('oa-detail.html', oa_number=oa_number, details=parts, error=error, detail_one=detail_one, po_number=po_number, c_code=c_code)
 
     
 
@@ -65,4 +76,27 @@ def send(oa_number):
     else:
         message = result['message']
         order_code = 'Order Code: '+ result['order_code']
+    data = {
+        "oa_number":oa_number,
+        "type":'outbound',
+        "c_code": g_send_form['country_code'],
+        "ship_method":g_send_form['ship_method'],
+        "remark":g_send_form['remarks'],
+        "order_code":order_code.split(':')[1]
+    }
+    send_log(data)
     return render_template('oa-detail.html', message=message, order_code=order_code, error=error, oa_number=oa_number)
+
+
+@blueprint.route('/outbound/history', methods=['GET', 'POST'])
+@login_required
+def get_log():
+    details = Log.query.all()
+    i = 0
+    done = None
+    for i in range(len(details)):
+        details[i] = str(details[i]).split('|')
+        if i == len(details) - 1:
+            done = details[i]
+    print(details)
+    return render_template('outbound_history.html', details=details, done=done)

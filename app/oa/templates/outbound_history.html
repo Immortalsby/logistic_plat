@@ -1,0 +1,85 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+            <li class="breadcrumb-item"><a href="./dashboard.html"><span class="fas fa-home"></span></a></li>
+            <li class="breadcrumb-item" aria-current="page">History</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Outbound History</li>
+        </ol>
+    </nav>
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+        <div class="mb-3 mb-lg-0">
+            <h1 class="h4">OutBound History</h1>
+            <p class="mb-0">Order By Latest Order</p>
+        </div>
+        <!-- <div>
+            <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/components/forms/" class="btn btn-outline-gray"><i class="far fa-question-circle me-1"></i> Forms Docs</a>
+        </div> -->
+    </div>
+</div>
+
+<form method="post" action="/outbound" class="mt-4" id="outbound">
+<!-- 
+    {{ oa_number }} -->
+
+    <!-- Form -->
+    <!-- <p class="text-danger">{% for message in get_flashed_messages() %}{{ message }}{% endfor %}</p>
+    <div class="form-group mb-4">
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1"><span class="fas fa-clipboard-list"></span></span>
+            <input type="text" placeholder="Enter OA Number" name="oa_number" class="w-25">
+            <button type="submit" name="send" class="btn btn-dark"/>Search OA Number</button>
+        </div>
+    </div> -->
+        
+</form>
+
+<div class="card border-light shadow-sm my-4 w-100">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-centered table-nowrap mb-0 rounded">
+                <thead class="thead-ligh">
+                    <tr>
+                        <th class="border-0">Oa Number</th>
+                        <th class="border-0">Country</th>
+                        <th class="border-0">Ship Method</th>
+                        <th class="border-0">Remark</th>
+                        <th class="border-0">Order Code</th>
+                        <th class="border-0">Operation User</th>
+                        <th class="border-0">Operation Date</th>
+                        <th class="border-0">Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detail in details %}
+                    <tr>
+                        <td class="border-0"> {{ detail[0] }} </td>
+                        <td class="border-0"> {{ detail[1] }} </td>
+                        <td class="border-0"> {{ detail[2] }} </td>
+                        <td class="border-0"> {{ detail[3] }} </td>
+                        <td class="border-0"> {{ detail[4] }} </td>
+                        <td class="border-0"> {{ detail[5] }} </td>
+                        <td class="border-0"> {{ detail[6] }} </td>
+                        <td class="border-0 text-{% if done is none %}danger{% else %}success{% endif %}"> {{ detail[7] }} </td>
+                    </tr>
+                    {% endfor %}
+                    <!-- End of Item -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -54,7 +54,7 @@ oadb_dict = {
     'tables_main': 'id, requestname, AdjReqNum, AdjReqDate, ShipAdress, ShipConPer, ShipPhone, KHMC, CustID,FHGJ,FHCity,FHYB,XXDZ',
     'except_part': '400000000001,508100000008,401000100002,401000100001,402000100027',
     'tables_part': 'PartNum, PartDesc, SellingQuantity, KHPOH',
-    'tables_ware': 'WLMS, CKLS, WLID',
+    'tables_ware': 'CKSL, CKSJ, WLMS, CKMC, WLID',
     'db_main': 'dbo.vw_WorkflowReport_Qzcfh_main',
     'db_part': 'dbo.vw_WorkflowReport_Qzcfh_Dt1',
     'db_ware': 'dbo.vw_WorkflowReport_Qzcfh_Dt2'
