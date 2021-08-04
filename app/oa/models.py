@@ -116,7 +116,10 @@ def prepare_oadetail(oa_number, g_send_form):
     return prepare_request(request_dict)
     
 def send_oadetail(request):
-    r = requests.post(xml_url, data=request.encode("utf-8"))
+    # print(request)
+    # print(request.encode("utf-8"))
+    r = requests.post(xml_url, data=request.replace('&amp;', '＆').encode("utf-8"))
+    print(r.content)
     tree = etree.XML(r.content)
     navareas = tree.xpath('//SOAP-ENV:Envelope/SOAP-ENV:Body/ns1:callServiceResponse/response/text()',namespaces={'SOAP-ENV': 'http://schemas.xmlsoap.org/soap/envelope/','ns1': 'http://www.example.org/Ec/'})
     output = ''
