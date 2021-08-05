@@ -77,17 +77,16 @@ def send(oa_number):
     if result['ask']=="Failure":
         # error = result['message']
         error = str(result) + str(requests)
-        order_code = 'get code failed'
     else:
         message = result['message']
-        order_code = 'Order Code: '+ result['order_code']
+        order_code = result['order_code']
     data = {
         "oa_number":oa_number,
         "type":'outbound',
         "c_code": g_send_form['country_code'],
         "ship_method":g_send_form['ship_method'],
         "remark":g_send_form['remarks'],
-        "order_code":order_code.split(':')[1]
+        "order_code":order_code
     }
     send_log(data)
     return render_template('oa-detail.html', message=message, order_code=order_code, error=error, oa_number=oa_number)
