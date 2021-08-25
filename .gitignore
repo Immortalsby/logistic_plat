@@ -39,5 +39,5 @@ app/base/static/assets/node_modules
 app/base/static/assets/yarn.lock
 app/base/static/assets/.temp
 app/base/static/assets/img
-
+app/home/templates
 app/base/static/assets/vendor
