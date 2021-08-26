@@ -3,13 +3,14 @@
 Copyright (c) 2021 - present Hanshow
 """
 
+from app import oa
 from app.oa import blueprint
 from flask import render_template, redirect, url_for, request,flash
 from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
-from app.oa.models import get_oadetail, prepare_oadetail, send_log, send_oadetail, get_oadbinfo, Log
-from app.oa.utils import get_country
+from app.oa.models import get_oadetail, prepare_oadetail, send_log, send_oadetail, get_oadbinfo, Log, get_tracking_no
+from app.oa.utils import get_country,switch_url
 
 
 @blueprint.route('/outbound', methods=['GET', 'POST'])
@@ -58,11 +59,29 @@ def get_detail(oa_number):
     return render_template('oa-detail.html', oa_number=oa_number, details=parts, error=error, detail_one=detail_one, po_number=po_number, c_code=c_code)
 
     
+@blueprint.route('/outbound/<oa_number>/tracking', methods=['GET', 'POST'])
+@login_required
+def get_tracking(oa_number):
+    if (oa_number == None or oa_number == ''):
+        redirect('/outbound')
+    error = None
+    data = None
+    items = None
+    res = get_tracking_no(oa_number)
+    if res['ask']=="Failure":
+        error = str(res)
+    else:
+        data = res['data']
+        items = data['items']
+        url = switch_url(data['shipping_method'])
+    return render_template('oa-tracking.html',oa_number=oa_number,data=data,error=error,items=items,url=url)
 
 
 @blueprint.route('/outbound/<oa_number>/send', methods=['GET', 'POST'])
 @login_required
 def send(oa_number):
+    if (oa_number == None or oa_number == ''):
+        redirect('/outbound')
     message = None
     error = None
     order_code = None

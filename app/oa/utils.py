@@ -20,3 +20,9 @@ def get_country(c):
     else:
         c = 'Country not available'
     return c
+
+def switch_url(value):
+    switcher = {
+        'CTS_GROUP': "https://www.ctsgroup.nl/track-trace/?t="
+    }
+    return switcher.get(value, 'wrong value')

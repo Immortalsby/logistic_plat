@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-between w-100 flex-wrap">
+    <div class="d-flex justify-content-between w-75 flex-wrap">
         <div class="mb-3 mb-lg-0">
             <p class="mb-0">Information for OA number: {{ oa_number }}</p>
             {% if error is not none and message is none %}
@@ -37,10 +37,13 @@
             {% endif %}
             {% endif %}
         </div>
+        <button class="btn btn-dark float-start"  /><a class="text-white" href="/outbound/{{ oa_number }}/tracking">Tracking Info</a></button>
     </div>
     {% if detail_one is defined and detail_one is not none%}
     <div class="card border-light shadow-sm my-4 w-75">
+
         <div class="card-body">
+
             <div class="table-responsive">
                 <table class="table table-centered table-nowrap mb-0 rounded">
                     <tbody>
@@ -118,14 +121,16 @@
                             <td class="border-0"> {{ detail.total_part }} </td>
                             <td class="border-0"> {{ detail.rest_part }} </td>
                             <td class="border-0"> {{ detail.CKSJ }} </td>
-                            <td class="border-0 text-{% if detail.shipped is none %}danger{% else %}success{% endif %}"> {% if detail.shipped is none %}shipping{% else %}{{ detail.shipped }}{% endif %} </td>
+                            <td class="border-0 text-{% if detail.shipped is none %}danger{% else %}success{% endif %}">
+                                {% if detail.shipped is none %}shipping{% else %}{{ detail.shipped }}{% endif %} </td>
                         </tr>
                         {% endfor %}
                         <!-- End of Item -->
                     </tbody>
                 </table>
                 {% else %}
-                <h3 class="text-danger">No outbound OA order is created. Please <a href="https://oa.hanshow.com" target="_blanc">create an OA order</a> first. </h3>
+                <h3 class="text-danger">No outbound OA order is created. Please <a href="https://oa.hanshow.com"
+                        target="_blanc">create an OA order</a> first. </h3>
                 {% endif %}
             </div>
         </div>
@@ -163,7 +168,7 @@
         <div class="mb-3">
             <span class="input-group-text" id="basic-addon1" style="display: inline!important;"><span
                     class="fas fa-globe-europe"></span></span>
-                    
+
             <select class="form-select w-auto" name="oa_country" style="display: inline!important;margin-left:-5px">
                 <!-- <option selected>Select Destination Country</option>
                 <option value="FR">FR [FRANCE 法国]</option>
@@ -187,13 +192,15 @@
                 <option value="UPS_DELIVERY">UPS STARDARD</option>
                 <option value="UPS_EXPRESS">UPS EXPRESS</option>
             </select>
-            <span class="ml-3 text-danger">Choose your Shipping Method Otherwise we will use <strong>UPS STARDARD</strong> by default</span>
+            <span class="ml-3 text-danger">Choose your Shipping Method Otherwise we will use <strong>UPS
+                    STARDARD</strong> by default</span>
         </div>
     </div>
     <div class="form-group my-4 w-50">
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><span class="fas fa-comment-dots"></span></span>
-            <textarea class="form-control" placeholder="Order Remarks(optional)" id="textarea" rows="4" name="oa_remark"></textarea>
+            <textarea class="form-control" placeholder="Order Remarks(optional)" id="textarea" rows="4"
+                name="oa_remark"></textarea>
         </div>
     </div>
     <div class="form-group mb-4">
@@ -202,7 +209,7 @@
             <span class="input-group-text" id="basic-addon1"><input type="checkbox" name="cb"
                     id="check_to_send_to_wms">&nbsp;&nbsp;&nbsp; I confirm that all details above are all
                 correct.</span>
-            <button disabled id="send_to_wms" type="submit" name="send" class="btn btn-dark"/>Send to WMS</button>
+            <button disabled id="send_to_wms" type="submit" name="send" class="btn btn-dark" />Send to WMS</button>
             {% endif %}
         </div>
     </div>

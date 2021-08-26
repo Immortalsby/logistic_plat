@@ -1,0 +1,97 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+            <li class="breadcrumb-item"><a href="/dashboard.html"><span class="fas fa-home"></span></a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/outbound.html">Send OA information to WMS</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/outbound/{{ oa_number }}">OA Details</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tracking Details</li>
+        </ol>
+    </nav>
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+        <div class="mb-3 mb-lg-0">
+            <h1 class="h4">Tracking Details</h1>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between w-75 flex-wrap">
+        <div class="mb-3 mb-lg-0">
+            <p class="mb-0">Tracking Info for OA number: {{ oa_number }}</p>
+            {% if error is not none and data is none %}
+            <p class="mb-0 text-danger">{{ error }}</p>
+            {% endif %}
+        </div>
+    </div>
+    {% if error is none and data is not none and data is defined %}
+    <div class="card border-light shadow-sm my-4 w-75">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-centered table-nowrap mb-0 rounded">
+                    <tbody>
+                        <tr>
+                            <td class="border-0 w-50"><b>Tracking Number</b></td>
+                            <td class="border-0 text-danger"> <a href="{{ url }}{{ data.tracking_no }}" target="_blank">{{ data.tracking_no }} -> click for tracking state</a> </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0 w-50"><b>Order Code</b></td>
+                            <td class="border-0"> {{ data.order_code }} </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>Shipping Method</b></td>
+                            <td class="border-0"> {{ data.shipping_method }} </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>Order Description</b></td>
+                            <td class="border-0"> {{ data.order_desc | truncate (60, True)  }} </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>Destination</b></td>
+                            <td class="border-0"> {{ data.consignee_address1 }}, {{ data.consigne_zipcode }}, {{ data.consignee_city }}, {{ data.consignee_state }}, {{ data.consignee_country_name }}</td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"><b>Shipping Date</b></td>
+                            <td class="border-0">{{ data.date_shipping }}</td>
+                        </tr>
+                        <!-- End of Item -->
+                    </tbody>
+                </table>
+                <hr>
+                {% if details is not none %}
+                <table class="table table-centered table-nowrap mb-0 rounded">
+                    <thead class="thead-ligh">
+                        <tr>
+                            <th class="border-0 w-50">Item SKU</th>
+                            <th class="border-0">Shipping Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td class="border-0"> {{ item.product_sku }} </td>
+                            <td class="border-0"> {{ item.quantity }} </td>
+                        </tr>
+                        {% endfor %}
+                        <!-- End of Item -->
+                    </tbody>
+                </table>
+                {% else %}
+                <h3 class="text-danger">No outbound OA order is created. Please <a href="https://oa.hanshow.com"
+                        target="_blanc">create an OA order</a> first. </h3>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <button class="btn btn-dark" /><a class="text-white" href="/outbound/{{ oa_number }}">Return to OA details</a></button>
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}{% endblock javascripts %}

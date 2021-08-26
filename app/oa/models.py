@@ -58,15 +58,6 @@ def get_oadbinfo(id,table,db):
     connection.close()
     return results
 
-# def get_warehouse(id):
-#     app_config = config_dict['Debug']
-#     engine = create_engine(app_config.SQLALCHEMY_BINDS['oadb'])
-#     connection = engine.connect()
-#     tables = oadb_dict['tables_ware']
-#     results = connection.execute("Select {} from {} where mainid={} and PartNum NOT IN ({});".format(tables, oadb_dict['db_ware'], id, oadb_dict['except_part'])).fetchall()
-#     results = [dict(zip(result.keys(), result)) for result in results]
-#     connection.close()
-#     return results
 
 def prepare_data(main, g_send_form):
     print("id",main[0]['id'])
@@ -119,7 +110,7 @@ def send_oadetail(request):
     # print(request)
     # print(request.encode("utf-8"))
     r = requests.post(xml_url, data=request.replace('&amp;', '＆').encode("utf-8"))
-    print(r.content)
+    # print(r.content)
     tree = etree.XML(r.content)
     navareas = tree.xpath('//SOAP-ENV:Envelope/SOAP-ENV:Body/ns1:callServiceResponse/response/text()',namespaces={'SOAP-ENV': 'http://schemas.xmlsoap.org/soap/envelope/','ns1': 'http://www.example.org/Ec/'})
     output = ''
@@ -137,3 +128,23 @@ def send_log(data):
     log = Log(**data)
     db.session.add(log)
     db.session.commit()
+
+def prepare_tracking(oa_number):
+    req_dict = xml_dict
+    req_dict['service'] = "<service>getOrderByRefCode</service>"
+    req_dict['data'] = '''{
+        "reference_no": "''' + oa_number + '''"
+    }'''
+    return prepare_request(req_dict)
+
+def get_tracking_no(oa_number):
+    request = prepare_tracking(oa_number)
+    r = requests.post(xml_url, data=request.replace('&amp;', '＆').encode("utf-8"))
+    print(r.content)
+    tree = etree.XML(r.content)
+    navareas = tree.xpath('//SOAP-ENV:Envelope/SOAP-ENV:Body/ns1:callServiceResponse/response/text()',namespaces={'SOAP-ENV': 'http://schemas.xmlsoap.org/soap/envelope/','ns1': 'http://www.example.org/Ec/'})
+    output = ''
+    for i in navareas[0]:
+	    output += str(i)
+    res_list = json.loads(output)
+    return res_list
