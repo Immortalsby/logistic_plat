@@ -109,20 +109,20 @@
                             <th class="border-0">Selling Quantity</th>
                             <th class="border-0">Rest Quantity</th>
                             <th class="border-0">Outbound Date</th>
-                            <th class="border-0">Ship State</th>
+                            <!-- <th class="border-0">Ship State</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         {% for detail in details %}
                         <tr>
-                            <td class="border-0"> {{ detail.WLMS| truncate (10, True) }} </td>
+                            <td class="border-0"> {{ detail.WLMS| truncate (30, True) }} </td>
                             <td class="border-0"> {{ detail.WLID }} </td>
                             <td class="border-0"> {{ detail.CKSL }} </td>
                             <td class="border-0"> {{ detail.total_part }} </td>
                             <td class="border-0"> {{ detail.rest_part }} </td>
                             <td class="border-0"> {{ detail.CKSJ }} </td>
-                            <td class="border-0 text-{% if detail.shipped is none %}danger{% else %}success{% endif %}">
-                                {% if detail.shipped is none %}shipping{% else %}{{ detail.shipped }}{% endif %} </td>
+                            <!-- <td class="border-0 text-{% if detail.shipped is none %}danger{% else %}success{% endif %}">
+                                {% if detail.shipped is none %}shipping{% else %}{{ detail.shipped }}{% endif %} </td> -->
                         </tr>
                         {% endfor %}
                         <!-- End of Item -->

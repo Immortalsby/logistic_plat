@@ -37,11 +37,9 @@ def get_detail(oa_number):
             rest = detail['SellingQuantity']
             for part in parts:
                 if detail['PartNum'] == part['WLID']:
-                    part['shipped'] = 'shipped'
                     part['rest_part'] = rest - int(part['CKSL'])
                     part['total_part'] = detail['SellingQuantity']
                     rest = part['rest_part']
-            parts[-1]['shipped'] = None
         print(parts)
     else:
         parts = None
